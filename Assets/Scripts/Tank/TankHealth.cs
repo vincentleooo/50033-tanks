@@ -13,7 +13,9 @@ public class TankHealth : MonoBehaviour
     private AudioSource m_ExplosionAudio;          
     private ParticleSystem m_ExplosionParticles;   
     private float m_CurrentHealth;  
-    private bool m_Dead;            
+    private bool m_Dead;
+	public AudioSource m_HitAudio;
+	public AudioClip m_HitClip;            
 
 
     private void Awake()
@@ -37,6 +39,7 @@ public class TankHealth : MonoBehaviour
     {
         // Adjust the tank's current health, update the UI based on the new health and check whether or not the tank is dead.
         m_CurrentHealth -= amount;
+		m_HitAudio.PlayOneShot(m_HitClip, 15.0f);
 
         SetHealthUI();
         if (m_CurrentHealth <= 0f && !m_Dead) OnDeath();

@@ -29,7 +29,8 @@ public class CameraControl : MonoBehaviour
 
     private void Move()
     {
-        FindAveragePosition();
+        // FindAveragePosition();
+		FindOwnPosition();
 
         transform.position = Vector3.SmoothDamp(transform.position, m_DesiredPosition, ref m_MoveVelocity, m_DampTime);
     }
@@ -56,11 +57,21 @@ public class CameraControl : MonoBehaviour
 
         m_DesiredPosition = averagePos;
     }
+	
+	private void FindOwnPosition()
+    {
+        Vector3 averagePos = new Vector3();
+		averagePos = m_Targets[0].position;
 
+        averagePos.y = transform.position.y;
+
+        m_DesiredPosition = averagePos;
+    }
 
     private void Zoom()
     {
-        float requiredSize = FindRequiredSize();
+        // float requiredSize = FindRequiredSize();
+        float requiredSize = 15f;
         m_Camera.orthographicSize = Mathf.SmoothDamp(m_Camera.orthographicSize, requiredSize, ref m_ZoomSpeed, m_DampTime);
     }
 
@@ -95,7 +106,8 @@ public class CameraControl : MonoBehaviour
 
     public void SetStartPositionAndSize()
     {
-        FindAveragePosition();
+        // FindAveragePosition();
+		FindOwnPosition();
 
         transform.position = m_DesiredPosition;
 
